@@ -18,7 +18,7 @@ class AdminAuth
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::guard('api')->check() && $request->user()->role_id !== User::ROLE_ID_ADMIN) {
+        if (Auth::guard('api')->check() && $request->user()->role_id != User::ROLE_ID_ADMIN) {
             $message = ['message' => 'Permission Denied'];
 
             return response($message, 401);

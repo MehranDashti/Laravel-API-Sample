@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['cors', 'json.response']], static function () {
-    Route::post('/login', 'Auth\ApiAuthController@login')->name('login.api');
-    Route::post('/register', 'Auth\ApiAuthController@register')->name('register.api');
+    Route::post('login', 'Auth\ApiAuthController@login')->name('login.api');
+    Route::post('register', 'Auth\ApiAuthController@register')->name('register.api');
 
     Route::middleware('auth:api')->group(static function () {
-        Route::post('/logout', 'Auth\ApiAuthController@logout')->name('logout.api');
+        Route::post('logout', 'Auth\ApiAuthController@logout')->name('logout.api');
         Route::get('customer', 'Api\v1\CustomerController@index')->name('index.customer');
 
         Route::middleware('api.admin')->group(function () {
