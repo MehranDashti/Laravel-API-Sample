@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\v1;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Customer;
 use App\Http\Controllers\Controller;
@@ -21,6 +21,7 @@ class CustomerController extends Controller
     {
         return Customer::paginate(20);
     }
+
     /**
      * Import new customers by csv file.
      *

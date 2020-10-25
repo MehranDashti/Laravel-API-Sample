@@ -7,18 +7,18 @@ services:
         uid: 1000
       context: ./
       dockerfile: docker-compose/Dockerfile
-    image: laraveltest
-    container_name: laraveltest-app
+    image: laravelapi
+    container_name: laravelapi-app
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./:/var/www
     networks:
-      - laraveltest
+      - laravelapi
 
   db:
     image: mysql:5.7
-    container_name: laraveltest-db
+    container_name: laravelapi-db
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -28,13 +28,13 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
-      - my-datavolume:/var/lib/database
+      - ./storage/dbdata:/var/lib/mysql
     networks:
-      - laraveltest
+      - laravelapi
 
   nginx:
     image: nginx:1.17-alpine
-    container_name: laraveltest-nginx
+    container_name: laravelapi-nginx
     restart: unless-stopped
     ports:
       - 8000:80
@@ -42,11 +42,8 @@ services:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
     networks:
-      - laraveltest
+      - laravelapi
 
 networks:
-  laraveltest:
+  laravelapi:
     driver: bridge
-
-volumes:
-  my-datavolume:

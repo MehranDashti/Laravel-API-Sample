@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,11 +19,10 @@ Route::group(['middleware' => ['cors', 'json.response']], static function () {
 
     Route::middleware('auth:api')->group(static function () {
         Route::post('logout', 'Auth\ApiAuthController@logout')->name('logout.api');
-        Route::get('customer', 'Api\v1\CustomerController@index')->name('index.customer');
+        Route::get('customer', 'Api\V1\CustomerController@index')->name('index.customer');
 
         Route::middleware('api.admin')->group(function () {
-            Route::post('customer/import', 'Api\v1\CustomerController@import')->name('import.customer');
+            Route::post('customer/import', 'Api\V1\CustomerController@import')->name('import.customer');
         });
     });
 });
-

@@ -60,7 +60,7 @@ class RegisterTest extends TestCase
             ]);
     }
 
-    public function testRegisterSuccesfully()
+    public function testRegisterSuccessfully()
     {
         $payload = [
             'name' => 'test',

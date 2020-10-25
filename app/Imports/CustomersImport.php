@@ -14,7 +14,6 @@ class CustomersImport implements ToModel, WithValidation, WithHeadingRow, WithBa
 {
     use RemembersRowNumber;
 
-
     /**
     * @inheritDoc
     */

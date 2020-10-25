@@ -8,7 +8,6 @@ use App\Http\Requests\RegisterUserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Passport\PersonalAccessTokenResult;
@@ -48,6 +47,10 @@ class ApiAuthController extends Controller
         return response($response, 422);
     }
 
+    /**
+     * @param Request $request
+     * @return Response
+     */
     public function logout(Request $request)
     {
         $token = $request->user()->token();
@@ -56,7 +59,6 @@ class ApiAuthController extends Controller
 
         return response($response, 200);
     }
-
 
     /**
      * Get the token array structure.
