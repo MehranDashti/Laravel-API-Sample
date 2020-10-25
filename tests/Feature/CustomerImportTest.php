@@ -31,7 +31,7 @@ class CustomerImportTest extends TestCase
         $headers = ['Authorization' => "Bearer {$result->accessToken}"];
 
         $this->json('POST', '/api/v1/customer/import', [], $headers)
-            ->assertStatus(401)
+            ->assertStatus(403)
             ->assertExactJson([
                 'message' => 'Permission Denied'
             ]);

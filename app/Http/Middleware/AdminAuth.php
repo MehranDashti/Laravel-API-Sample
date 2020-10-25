@@ -21,7 +21,7 @@ class AdminAuth
         if (Auth::guard('api')->check() && $request->user()->role_id != User::ROLE_ID_ADMIN) {
             $message = ['message' => 'Permission Denied'];
 
-            return response($message, 401);
+            return response($message, 403);
         }
 
         return $next($request);
