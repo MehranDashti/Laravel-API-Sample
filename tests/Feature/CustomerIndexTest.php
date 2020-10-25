@@ -9,7 +9,6 @@ class CustomerIndexTest extends TestCase
 {
     private $headers;
 
-
     /**
      * @inheritDoc
      */

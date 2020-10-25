@@ -13,7 +13,6 @@ class CustomerImportTest extends TestCase
      */
     private $headers;
 
-
     /**
      * @inheritDoc
      */
@@ -38,7 +37,7 @@ class CustomerImportTest extends TestCase
             ]);
     }
 
-    public function testReguiredCsvFile()
+    public function testRequiredCsvFile()
     {
         $this->json('POST', '/api/v1/customer/import', [], $this->headers)
             ->assertStatus(422)
@@ -58,6 +57,21 @@ class CustomerImportTest extends TestCase
             ->assertExactJson([
                 'message' => 'The given data was invalid.',
                 'errors' => ['csv_file' => ['The csv file must be a file of type: csv, txt.']],
+            ]);
+    }
+
+    public function testImportSuccessfully()
+    {
+        $header = 'first_name, last_name, phone';
+        $row = 'john, doe, 989123456789';
+        $content = implode('\n', [$header, $row]);
+        $file = UploadedFile::fake()->createWithContent('csv_file.csv', $content);
+        $payload = ['csv_file' => $file];
+
+        $this->json('POST', '/api/v1/customer/import', $payload, $this->headers)
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                'message',
             ]);
     }
 }
