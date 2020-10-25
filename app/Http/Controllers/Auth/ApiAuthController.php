@@ -15,6 +15,43 @@ use Laravel\Passport\PersonalAccessTokenResult;
 class ApiAuthController extends Controller
 {
     /**
+     * @OA\Post(
+     *      path="/register",
+     *      summary="Register",
+     *      description="Register by name, email, password",
+     *      operationId="authRegister",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Pass user credentials",
+     *          @OA\JsonContent(
+     *              required={"name","email","password"},
+     *              @OA\Property(property="name", type="string", example="user2"),
+     *              @OA\Property(property="email", type="string", format="email", example="user2@mail.com"),
+     *              @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *              @OA\Property(property="password_confirmation", type="string", format="password", example="PassWord12345"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="token_type", type="string", example="Bearer"),
+     *              @OA\Property(property="access_token", type="string"),
+     *              @OA\Property(property="expires_in", type="integer", example=86398),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Validation error",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="user credentials is wrong"),
+     *              @OA\Property(property="errors", type="json"),
+     *          )
+     *      )
+     * )
+     */
+    /**
      * @param RegisterUserRequest $request
      * @return Response
      */
@@ -29,6 +66,40 @@ class ApiAuthController extends Controller
         return $this->respondWithToken($result);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/login",
+     *      summary="Sign in",
+     *      description="Login by email, password",
+     *      operationId="authLogin",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Pass user credentials",
+     *          @OA\JsonContent(
+     *              required={"email","password"},
+     *              @OA\Property(property="email", type="string", format="email", example="user1@mail.com"),
+     *              @OA\Property(property="password", type="string", format="password", example="PassWord12345"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="token_type", type="string", example="Bearer"),
+     *              @OA\Property(property="access_token", type="string"),
+     *              @OA\Property(property="expires_in", type="integer", example=86398),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Wrong credentials",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="user credentials is wrong")
+     *          )
+     *      )
+     * )
+     */
     /**
      * @param LoginUserRequest $request
      * @return Response
@@ -47,6 +118,30 @@ class ApiAuthController extends Controller
         return response($response, 422);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/logout",
+     *      summary="Logout",
+     *      description="Logout user and invalidate token",
+     *      operationId="authLogout",
+     *      tags={"Auth"},
+     *      security={ {"bearer": {} }},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="You have been successfully logged out!"),
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Returns when user is not authenticated",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="message", type="string", example="Unauthenticated."),
+     *          )
+     *       )
+     * )
+     */
     /**
      * @param Request $request
      * @return Response
